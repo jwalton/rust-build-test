@@ -27,10 +27,17 @@ jobs:
         with:
           driver: docker-container
           driver-opts: image=moby/buildkit:master,network=host
-      - name: Expose GitHub Runtime
-        uses: crazy-max/ghaction-github-runtime@v4
-      - run: |
-          docker buildx build \
-            --cache-from "type=gha" \
-            --cache-to "type=gha" \
-            -t test .
+      # - name: Expose GitHub Runtime
+      #   uses: crazy-max/ghaction-github-runtime@v4
+      # - run: |
+      #     docker buildx build \
+      #       --cache-from "type=gha" \
+      #       --cache-to "type=gha" \
+      #       -t test .
+      - name: Build and push
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          tags: "test:latest"
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
