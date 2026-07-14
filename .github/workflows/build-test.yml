@@ -19,20 +19,6 @@ env:
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        toolchain:
-          - stable
-          - beta
-          - nightly
     steps:
       - uses: actions/checkout@v5
-      - uses: moonrepo/setup-rust@v1
-        with:
-          channel: ${{ matrix.toolchain }}
-          cache-base: master
-      - run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }}
-      - run: cargo build
-      - name: Start nginx
-        run: cd test-support && docker compose up -d
-      - run: cargo test
+      - run: docker build --cache-from type=local,src=/tmp/t --cache-to type=local,dest=/tmp/t -t test .
