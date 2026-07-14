@@ -45,6 +45,7 @@ impl DownloadConfig {
             Err(e) => (Uri::from_static("http://invalid/"), Some(e)),
         };
 
+        println!("Hello world");
         DownloadConfig {
             uri: url,
             headers: headers.clone(),
