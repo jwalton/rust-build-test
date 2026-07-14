@@ -21,4 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - run: docker build --cache-from type=local,src=/tmp/t --cache-to type=local,dest=/tmp/t -t test .
+      - name: Expose GitHub Runtime
+        uses: crazy-max/ghaction-github-runtime@v4
+      - run: |
+          docker build \
+            --cache-from "type=gha,url=${ACTIONS_CACHE_URL},token=${ACTIONS_RUNTIME_TOKEN}" \
+            --cache-to "type=gha,url=${ACTIONS_CACHE_URL},token=${ACTIONS_RUNTIME_TOKEN}" \
+            -t test .
+
