@@ -34,10 +34,16 @@ jobs:
       #       --cache-from "type=gha" \
       #       --cache-to "type=gha" \
       #       -t test .
-      - name: Build and push
-        uses: docker/build-push-action@v7
+      - name: Cache
+        uses: actions/cache@v6
         with:
-          context: .
-          tags: "test:latest"
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          path: /tmp/t
+          key: ${{ runner.os }}-docker-build-cache
+      - run: mkdir /tmp/t && docker buildx build --cache-from type=local,src=/tmp/t --cache-to type=local,dest=/tmp/t -t test .
+      # - name: Build and push
+      #   uses: docker/build-push-action@v7
+      #   with:
+      #     context: .
+      #     tags: "test:latest"
+      #     cache-from: type=gha
+      #     cache-to: type=gha,mode=max
