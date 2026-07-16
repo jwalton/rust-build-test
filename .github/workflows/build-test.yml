@@ -39,6 +39,7 @@ jobs:
         with:
           path: /tmp/t
           key: ${{ runner.os }}-docker-build-cache
+      - run: ls -la /tmp/t
       - run: mkdir -p /tmp/t && docker buildx build --cache-from type=local,src=/tmp/t --cache-to type=local,dest=/tmp/t -t test .
       # - name: Build and push
       #   uses: docker/build-push-action@v7
