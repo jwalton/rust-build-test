@@ -40,7 +40,6 @@ pub struct DownloadConfig {
 impl DownloadConfig {
     /// Create a new download for the given URL.
     pub(crate) fn new(url: impl IntoUri, headers: &HeaderMap) -> Self {
-        println!("jwalton - woo");
         let (url, err) = match url.into_uri() {
             Ok(u) => (u, None),
             Err(e) => (Uri::from_static("http://invalid/"), Some(e)),

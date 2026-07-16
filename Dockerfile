@@ -17,4 +17,4 @@ FROM base AS build
 COPY . .
 RUN --mount=type=cache,target=/usr/local/cargo/registry \
     --mount=type=cache,target=/usr/src/app/target \
-    cargo build
+    cargo build && cp target/debug/downlowd .
